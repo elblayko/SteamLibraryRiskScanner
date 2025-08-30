@@ -1,4 +1,4 @@
-﻿<#
+<#
 ================================================================================
   SteamLibrary-RiskScanner.ps1
   -------------------------------------------------------------------------------
@@ -258,6 +258,20 @@ function Get-JsonProp { param($obj, [string]$Name)
   $p = $obj.PSObject.Properties[$Name]; if ($p) { return $p.Value } else { return $null }
 }
 
+# ---------------- Text Matching Helpers ----------------
+function Test-WholeWordPhrase {
+  param(
+    [Parameter(Mandatory)][string]$Text,
+    [Parameter(Mandatory)][string]$Phrase
+  )
+  if ([string]::IsNullOrWhiteSpace($Text) -or [string]::IsNullOrWhiteSpace($Phrase)) { return $false }
+  $escaped = [regex]::Escape($Phrase)
+  # Require non-letter/digit/underscore on both sides (or string boundaries).
+  $pattern = "(?i)(?<![\p{L}\p{Nd}_])" + $escaped + "(?![\p{L}\p{Nd}_])"
+  return [bool]([regex]::IsMatch($Text, $pattern))
+}
+
+
 # ---------------- In-memory Cache ----------------
 if (-not (Get-Variable -Name AppCache -Scope Script -ErrorAction SilentlyContinue)) { $script:AppCache = @{} }
 
@@ -432,7 +446,11 @@ function Get-ChineseOriginAssessment {
   }
   if (-not $strong -and $Name) {
     foreach ($title in $Global:KnownChineseGames) {
-      if ($Name -like "*$title*") { $strong = $true; $reason += "Matched known Chinese game title: '$title'"; break }
+      if (Test-WholeWordPhrase -Text $Name -Phrase $title) {
+        $strong = $true
+        $reason += "Matched known Chinese game title (whole word): '$title'"
+        break
+      }
     }
   }
 
