@@ -66,3 +66,5 @@ Tooltips in the report explain **why** each finding increased the score.
 
 This tool provides **informational risk scoring only**.  
 It does **not** definitively determine if a game is safe or unsafe. Always do your own research before making decisions about installation or play.
+
+<img width="3073" height="1717" alt="Screenshot 2025-08-29 at 22-00-43 Steam Library Risk Report" src="https://github.com/user-attachments/assets/9980ab9d-d060-4f5c-b108-86a66a188e33" />
