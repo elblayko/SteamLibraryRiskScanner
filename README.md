@@ -18,7 +18,7 @@ The script assigns each title a **risk score** based on factors like developer/p
   - Risk score breakdown with tooltips (why each point was added)  
   - Visual indicators for higher-risk titles  
 - ⚙️ **Configurable** – Edit scoring weights (e.g., +5 for Chinese origin, +4 for kernel AC)  
-- 📂 **JSON Database** – Saves results in `steam_scan.json` for future reference.
+- 📂 **JSON Database** – Store game metadata in `steam_scan.json` to reduce Steam API calls.
 
 ---
 
